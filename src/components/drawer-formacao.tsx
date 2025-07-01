@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Drawer,
   DrawerClose,
@@ -10,8 +11,27 @@ import {
 } from "@/components/ui/drawer"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { FormacaoItem } from "@/types"
 
-export default () => {
+export default function DrawerFormacao({ onAdd }: { onAdd: (data: FormacaoItem) => void }) {
+
+  const [localData, setLocalData] = useState({ curso: '', instituicao: '', conclusao: '' });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLocalData(prev => ({
+      ...prev,
+      [e.target.id]: e.target.value 
+    }))
+  }
+
+  const handleConfirm = () => {
+    onAdd(localData);
+    clearFields();
+  }
+
+  const clearFields = () => setLocalData({ curso: '', instituicao: '', conclusao: '' });
+
   return (
     <Drawer direction="right">
       <DrawerTrigger >
@@ -25,23 +45,23 @@ export default () => {
 
         <div className="flex flex-col gap-6 px-6">
           <div className="flex flex-col gap-2">
-            <label htmlFor="curso">Curso</label>
-            <Input id="curso" placeholder="Bacharel em Ciência da Computação"/>
+            <Label htmlFor="curso">Curso</Label>
+            <Input id="curso" value={localData.curso} onChange={handleChange} placeholder="Bacharel em Ciência da Computação"/>
           </div>
           <div className="flex flex-col gap-2">
-            <label htmlFor="instituicao">Instituicao</label>
-            <Input id="instituicao" placeholder="USP(Universidade de São Paulo)"/>
+            <Label htmlFor="instituicao">Instituicao</Label>
+            <Input id="instituicao" value={localData.instituicao} onChange={handleChange} placeholder="USP(Universidade de São Paulo)"/>
           </div>
           <div className="flex flex-col gap-2">
-            <label htmlFor="conclusao">Ano de conclusão do curso</label>
-            <Input id="conclusao" placeholder=""/>
+            <Label htmlFor="conclusao">Ano de conclusão do curso</Label>
+            <Input id="conclusao" value={localData.conclusao} onChange={handleChange} placeholder=""/>
           </div>
         </div>
 
         <DrawerFooter>
-          <Button className="w-full">Confirmar</Button>
           <DrawerClose>
-            <Button variant="outline" className="w-full">Cancelar</Button>
+            <Button onClick={handleConfirm} className="w-full mb-2">Confirmar</Button>
+            <Button variant="outline" onClick={clearFields} className="w-full">Cancelar</Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>
