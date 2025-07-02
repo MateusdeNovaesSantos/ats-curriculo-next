@@ -1,12 +1,11 @@
-"use client";
+'use client';
 import React from "react";
-import { PDFDownloadLink } from '@react-pdf/renderer';
+import dynamic from "next/dynamic";
 import { useForm, SubmitHandler, useFieldArray } from "react-hook-form";
 
 /* Chadcn Imports */
 import {
     Card,
-    CardAction,
     CardContent,
     CardDescription,
     CardFooter,
@@ -23,15 +22,25 @@ import DrawerExperiencia from "@/components/drawer-experiencia-profissional";
 
 import { ResumeInputs } from "@/types";
 import { ResumePDF } from "@/components/ResumePDF"
+import { mockResumeData } from "@/data/resume-mock-data";
+
+const PDFDownloadLinkDynamic = dynamic(
+    () => import('@react-pdf/renderer').then((mod) => mod.PDFDownloadLink),
+    {
+        ssr: false, // ssr: false é a chave! Significa "Server-Side Rendering: false"
+        loading: () => <Button disabled>Gerando PDF...</Button>
+    }
+)
 
 export default function Form() {
 
     // Vou revisar esse conceito depois
     const { register, control, handleSubmit, watch } = useForm<ResumeInputs>({
-        defaultValues: {
+        defaultValues: mockResumeData,
+        /* defaultValues: {
             formacao: [],
             experiencia: [],
-        }
+        } */
     });
 
     const onSubmit: SubmitHandler<ResumeInputs> = data => {
@@ -158,17 +167,12 @@ export default function Form() {
             </CardContent>
             <CardFooter className="flex justify-between">
                 <Button variant="outline">Salvar Rascunho</Button>
-                <PDFDownloadLink
+                <PDFDownloadLinkDynamic
                     document={<ResumePDF data={watch()} />}
-                    fileName="curriculo-mateus.pdf"
+                    fileName="curriculo.pdf"
                 >
-                    {({ loading }) =>
-                        <Button disabled={loading}>
-                            {loading ? 'Gerando...' : 'Gerar PDF'}
-                        </Button>
-                    }
-                </PDFDownloadLink>
-
+                    <Button>Gerar PDF</Button>
+                </PDFDownloadLinkDynamic>
             </CardFooter>
         </Card>
     );

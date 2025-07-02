@@ -34,8 +34,8 @@ export default function DrawerFormacao({ onAdd }: { onAdd: (data: FormacaoItem) 
 
   return (
     <Drawer direction="right">
-      <DrawerTrigger >
-        <Button className="w-30">+</Button>
+      <DrawerTrigger asChild>
+        <Button className="w-30 self-center">+</Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
