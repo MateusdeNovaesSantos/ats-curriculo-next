@@ -1,29 +1,26 @@
 import React from "react"
 import { Page, Text, View, Document, StyleSheet, Font, Link } from "@react-pdf/renderer"
 import { ResumeInputs } from "@/types"
-import { link } from "fs";
 
 type ResumePDFProps = {
     data: ResumeInputs;
 }
 
-/* Font.register({
+Font.register({
   family: 'Lato',
   fonts: [
-    { src: '/fonts/Lato-Regular' },
-    { src: '/fonts/Lato-Bold.ttf', fontWeight: 700 },
-    { src: '/fonts/Lato-Italic.ttf', fontStyle: 'italic' },
-    { src: '/fonts/Lato-BoldItalic.ttf', fontWeight: 700, fontStyle: 'italic' },
-  ]
-}); */
+    { src: '../../public/fonts/Lato-Regular.ttf' },
+    { src: '../../public/fonts/Lato-Bold.ttf', fontWeight: 700 },
+    { src: '../../public/fonts/Lato-Italic.ttf', fontStyle: 'italic' },
+    { src: '../../public/fonts/Lato-BoldItalic.ttf', fontWeight: 700, fontStyle: 'italic' },
+  ],
+});
 
 const styles = StyleSheet.create({
     page: {
-        paddingTop: 70,
-        paddingBotton: 70,
-        paddingHorizontal: 70,
+        padding: 72,
         backgroundColor: '#FFFFFF',
-        fontFamily: 'Helvetica',
+        fontFamily: 'Lato',
         lineHeight: 1.005,
     },
     header: {
@@ -32,7 +29,8 @@ const styles = StyleSheet.create({
     },
     name: {
         fontSize: 18,
-        fontFamily: 'Helvetica-Bold',
+        fontFamily: 'Lato',
+        fontWeight: 'bold',
         lineHeight: 1.4,
     },
     subtitle: {
@@ -47,7 +45,8 @@ const styles = StyleSheet.create({
     },
     sectionTitle: {
         fontSize: 15,
-        fontFamily: 'Helvetica-Bold',
+        fontFamily: 'Lato',
+        fontWeight: 'bold',
         marginBottom: 3,
         paddingBottom: 2,
     }
@@ -78,6 +77,15 @@ export const ResumePDF = ({ data }: ResumePDFProps) => (
                 <Text style={styles.sectionTitle}>RESUMO PROFISSIONAL</Text>
                 <Text style={styles.defaultText}>{data.resumoProfissional || 'Seu resumo profissional...'}</Text>
             </View>
+
+            {/* Seção de Idiomas */}
+
+
+            {/* Seção de Formação Complementar */}
+
+
+            {/* Seção de Informações adicionais */}
+            
             
         </Page>
     </Document>
