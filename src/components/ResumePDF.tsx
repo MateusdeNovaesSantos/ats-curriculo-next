@@ -2,6 +2,11 @@ import React from "react"
 import { Page, Text, View, Document, StyleSheet, Font, Link } from "@react-pdf/renderer"
 import { ResumeInputs } from "@/types"
 
+import LatoRegular from '@/assets/fonts/Lato-Regular.ttf';
+import LatoBold from '@/assets/fonts/Lato-Bold.ttf';
+import LatoItalic from '@/assets/fonts/Lato-Italic.ttf';
+import LatoBoldItalic from '@/assets/fonts/Lato-BoldItalic.ttf';
+
 type ResumePDFProps = {
     data: ResumeInputs;
 }
@@ -9,47 +14,51 @@ type ResumePDFProps = {
 Font.register({
   family: 'Lato',
   fonts: [
-    { src: '../../public/fonts/Lato-Regular.ttf' },
-    { src: '../../public/fonts/Lato-Bold.ttf', fontWeight: 700 },
-    { src: '../../public/fonts/Lato-Italic.ttf', fontStyle: 'italic' },
-    { src: '../../public/fonts/Lato-BoldItalic.ttf', fontWeight: 700, fontStyle: 'italic' },
+    { src: LatoRegular },
+    { src: LatoBold, fontWeight: 'bold' },
+    { src: LatoItalic, fontStyle: 'italic' },
+    { src: LatoBoldItalic, fontWeight: 'bold', fontStyle: 'italic' },
   ],
 });
 
 const styles = StyleSheet.create({
+
+    // Especificações da Página
     page: {
-        padding: 72,
-        backgroundColor: '#FFFFFF',
         fontFamily: 'Lato',
-        lineHeight: 1.005,
+        fontSize: 12,
+        paddingTop: 72,
+        paddingBottom: 72,
+        paddingHorizontal: 72,
+        backgroundColor: '#FFFFFF',
+        lineHeight: 1.1,
     },
+
+    // Especificações do Cabeçalho
     header: {
         textAlign: 'center',
         marginBottom: 20,
     },
     name: {
         fontSize: 18,
-        fontFamily: 'Lato',
         fontWeight: 'bold',
-        lineHeight: 1.4,
+        lineHeight: 1.3,
+        textTransform: 'uppercase',
     },
-    subtitle: {
-        fontSize: 12,
-        color: 'black',
-    },
-    defaultText: {
-        fontSize: 12,
-    },
+
+    // Especificações das Seções
     section: {
-        marginVertical: 10,
+        marginVertical: 8,
     },
     sectionTitle: {
         fontSize: 15,
-        fontFamily: 'Lato',
         fontWeight: 'bold',
-        marginBottom: 3,
-        paddingBottom: 2,
+        textTransform: 'uppercase',
+        marginBottom: 2,
+        paddingBottom: 8,
     }
+
+    //
 })
 
 export const ResumePDF = ({ data }: ResumePDFProps) => (
@@ -59,23 +68,23 @@ export const ResumePDF = ({ data }: ResumePDFProps) => (
             {/* Cabeçalho com dados dinâmicos */}
             <View style={styles.header}>
                 <Text style={styles.name}>{data.nomeCompleto?.toUpperCase() || 'NOME COMPLETO'}</Text>
-                <Text style={styles.subtitle}>{data.idade ? `${data.idade} anos` : ''}</Text>
-                <Text style={styles.subtitle}>{data.endereco ? `${data.endereco}` : ''}</Text>
-                <Text style={styles.subtitle}>{data.celular ? `${data.celular}` : ''}</Text>
-                <Link style={styles.defaultText} src={data.email}>{data.email ? `${data.email}` : ''}</Link>
-                <Link style={styles.defaultText} src={data.linkedin}>{data.linkedin ? `${data.linkedin}` : ''}</Link>
+                <Text>{data.idade ? `${data.idade} anos` : ''}</Text>
+                <Text>{data.endereco ? `${data.endereco}` : ''}</Text>
+                <Text>{data.celular ? `${data.celular}` : ''}</Text>
+                <Link src={data.email}>{data.email ? `${data.email}` : ''}</Link>
+                <Link src={data.linkedin}>{data.linkedin ? `${data.linkedin}` : ''}</Link>
             </View>
 
             {/* Seção de objetivo */}
             <View style={styles.section}>
-                <Text style={styles.sectionTitle}>OBJETIVO</Text>
-                <Text style={styles.defaultText}>{data.cargo || 'Cargo Desejado'}</Text>
+                <Text style={styles.sectionTitle}>objetivo</Text>
+                <Text>{data.cargo || 'Cargo Desejado'}</Text>
             </View>
 
             {/* Seção de resumo profissional */}
             <View style={styles.section}>
-                <Text style={styles.sectionTitle}>RESUMO PROFISSIONAL</Text>
-                <Text style={styles.defaultText}>{data.resumoProfissional || 'Seu resumo profissional...'}</Text>
+                <Text style={styles.sectionTitle}>resumo profissional</Text>
+                <Text>{data.resumoProfissional || 'Seu resumo profissional...'}</Text>
             </View>
 
             {/* Seção de Idiomas */}
@@ -86,7 +95,7 @@ export const ResumePDF = ({ data }: ResumePDFProps) => (
 
             {/* Seção de Informações adicionais */}
             
-            
+
         </Page>
     </Document>
 )

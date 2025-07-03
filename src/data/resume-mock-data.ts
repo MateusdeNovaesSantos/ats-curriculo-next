@@ -51,13 +51,17 @@ export const mockResumeData: ResumeInputs = {
     }
   ],
   
-  // As seções abaixo ainda não estão no seu formulário, mas podemos deixá-las prontas.
-  // idiomas: [
-  //   { idioma: "Inglês", nivel: "Avançado" }
-  // ],
-  // formacaoComplementar: [
-  //   { curso: "Python 3 - Curso Completo do Básico ao Avançado (Udemy)", cargaHoraria: "26h" },
-  //   { curso: "Docker p/ Desenvolvedores c/ Docker Swarm e Kubernetes (Udemy)", cargaHoraria: "12h" },
-  //   { curso: "SQL para Análise de Dados Do básico ao avançado (Udemy)", cargaHoraria: "6h" },
-  // ],
+  
+  idiomas: [
+    { idioma: "Inglês", nivel: "Avançado" }
+  ],
+  formacaoComplementar: [
+    { curso: "Python 3 - Curso Completo do Básico ao Avançado", plataforma: "Udemy", cargaHoraria: "26h" },
+    { curso: "Docker p/ Desenvolvedores c/ Docker Swarm e Kubernetes", plataforma: "Udemy", cargaHoraria: "12h" },
+    { curso: "SQL para Análise de Dados Do básico ao avançado", plataforma: "Udemy", cargaHoraria: "6h" },
+  ],
+  informacoesAdicionais: [
+    "CNH A e B",
+    "Projeto Web com NEXT.js e Flask"
+  ]
 };

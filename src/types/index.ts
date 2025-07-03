@@ -13,6 +13,17 @@ export type ExperienciaItem = {
     descricao: string[];
 }
 
+export type Idiomas = {
+    idioma: string;
+    nivel: 'Básico' | 'Intermediário' | 'Avançado' | 'Fluente';
+}
+
+export type FormacaoComplementarItem = {
+    curso: string;
+    plataforma: string;
+    cargaHoraria: string;
+}
+
 export type ResumeInputs = {
     nomeCompleto: string;
     celular: string;
@@ -24,4 +35,7 @@ export type ResumeInputs = {
     resumoProfissional: string;
     formacao: FormacaoItem[];
     experiencia: ExperienciaItem[];
+    idiomas: Idiomas[];
+    formacaoComplementar: FormacaoComplementarItem[];
+    informacoesAdicionais: string[],
 };

@@ -72,7 +72,7 @@ export default function DrawerExperiencia({ onAdd }: { onAdd: (data: Experiencia
                 <SelectGroup>
                   <SelectLabel>Selecione</SelectLabel>
                   <SelectItem value="pequeno">Pequeno</SelectItem>
-                  <SelectItem value="medio">Médio</SelectItem>
+                  <SelectItem value="médio">Médio</SelectItem>
                   <SelectItem value="grande">Grande</SelectItem>
                 </SelectGroup>
               </SelectContent>
