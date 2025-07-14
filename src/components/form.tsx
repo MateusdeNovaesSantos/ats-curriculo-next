@@ -1,7 +1,7 @@
 'use client';
 import React from "react";
 import dynamic from "next/dynamic";
-import { useForm, SubmitHandler, useFieldArray } from "react-hook-form";
+import { useForm, useFieldArray, Controller } from "react-hook-form";
 
 /* Chadcn Imports */
 import {
@@ -12,6 +12,15 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -22,7 +31,7 @@ import DrawerExperiencia from "@/components/drawer-experiencia-profissional";
 
 import { ResumeInputs } from "@/types";
 import { ResumePDF } from "@/components/ResumePDF"
-import { mockResumeData } from "@/data/resume-mock-data";
+/* import { mockResumeData } from "@/data/resume-mock-data"; */
 
 const PDFDownloadLinkDynamic = dynamic(
     () => import('@react-pdf/renderer').then((mod) => mod.PDFDownloadLink),
@@ -35,18 +44,16 @@ const PDFDownloadLinkDynamic = dynamic(
 export default function Form() {
 
     // Vou revisar esse conceito depois
-    const { register, control, handleSubmit, watch } = useForm<ResumeInputs>({
-        defaultValues: mockResumeData,
-        /* defaultValues: {
+    const { register, control, watch } = useForm<ResumeInputs>({
+        /* defaultValues: mockResumeData, */
+        defaultValues: {
             formacao: [],
             experiencia: [],
-        } */
+            idiomas: [],
+            formacaoComplementar: [],
+            informacoesAdicionais: [],
+        }
     });
-
-    const onSubmit: SubmitHandler<ResumeInputs> = data => {
-        console.log("Dados do Formulário:", data);
-        //lógica do PDF
-    }
 
     const { fields: formacaoFields, append: appendFormacao, remove: removeFormacao } = useFieldArray({
         control,
@@ -58,6 +65,21 @@ export default function Form() {
         name: "experiencia"
     })
 
+    const { fields: idiomaFields, append: appendIdioma, remove: removeIdioma } = useFieldArray({
+        control,
+        name: "idiomas"
+    })
+
+    const { fields: formacaoComplementarFields, append: appendFormacaoComplementar, remove: removeFormacaoComplementar } = useFieldArray({
+        control,
+        name: "formacaoComplementar"
+    })
+
+    const { fields: informacoesAdicionaisFields, append: appendInformacoesAdicionais, remove: removeInformacoesAdicionais } = useFieldArray({
+        control,
+        name: "informacoesAdicionais"
+    })
+
 
     return (
         <Card className="w-[430px]">
@@ -67,9 +89,9 @@ export default function Form() {
                     Monte seu currículo otimizado para ATS completo muito simples e rápido
                 </CardDescription>
             </CardHeader>
-            <pre className="mt-4 mx-4 p-4 bg-muted rounded-md text-sm">
+            {/* <pre className="mt-4 mx-4 p-4 bg-muted rounded-md text-sm">
                 {JSON.stringify(watch(), null, 2)}
-            </pre>
+            </pre> */}
             <CardContent>
                 <div className="flex flex-col gap-6">
                     <div className="flex flex-col gap-2">
@@ -109,14 +131,16 @@ export default function Form() {
                         <Textarea id="resumo-profissional" placeholder="Analista de Dados com 2 anos de experiência em ..." {...register("resumoProfissional")} />
                     </div>
                 </div>
+
+                {/* Seção Formação Acadêmica */}
                 <Separator className="my-6" />
                 <div className="flex flex-col gap-6">
-                    <label htmlFor="">Formação Acadêmica</label>
+                    <label htmlFor="">Seção Formação Acadêmica</label>
                     <DrawerFormacao onAdd={appendFormacao} />
 
                     <div id="formacao-list" className="flex flex-col gap-4">
                         {formacaoFields.map((field, index) => (
-                            <div key={field.id} className="p-4 border rounded-md relative">
+                            <div key={field.id} className="flex flex-col gap-6 p-4 border rounded-md relative">
                                 <p className="font-semibold mb-2">Formação #{index + 1}</p>
                                 {/* Inputs para cada campo da formação */}
                                 <div className="flex flex-1 flex-col gap-2">
@@ -128,20 +152,24 @@ export default function Form() {
                                     <Input disabled {...register(`formacao.${index}.instituicao`)} />
                                 </div>
                                 {/* Botão para remover */}
-                                <Button variant="destructive" size="sm" onClick={() => removeFormacao(index)} className="mt-2">
-                                    Remover
-                                </Button>
+                                <Separator />
+                                <div className="flex justify-between">
+                                    <Button variant="outline" size="sm" >Editar</Button>
+                                    <Button variant="ghost" size="sm" onClick={() => removeFormacao(index)}>Remover</Button>
+                                </div>
                             </div>
                         ))}
                     </div>
                 </div>
                 <Separator className="my-6" />
+
+                {/* Seção Experiência Profissional */}
                 <div className="flex flex-col gap-6">
-                    <label htmlFor="">Experiência Profissional</label>
+                    <label htmlFor="">Seção Experiência Profissional</label>
                     <DrawerExperiencia onAdd={appendExperiencia} />
                     <div id="experiencia-list" className="flex flex-col gap-4">
                         {experienciaFields.map((field, index) => (
-                            <div key={field.id} className="p-4 border rounded-md relative">
+                            <div key={field.id} className="flex flex-col gap-6 p-4 border rounded-md relative">
                                 <p className="font-semibold mb-2" >Experiência #{index + 1}</p>
                                 {/* Inputs para cada campo de experiencia */}
                                 <div className="flex flex-1 flex-col gap-2">
@@ -153,17 +181,107 @@ export default function Form() {
                                     <Input disabled {...register(`experiencia.${index}.cargo`)} />
                                 </div>
                                 {/* Botão para remover */}
-                                <Button variant="destructive" size="sm" onClick={() => removeExperiencia(index)} className="mt-2">Remover</Button>
+                                <Separator />
+                                <div className="flex justify-between">
+                                    <Button variant="outline" size="sm" >Editar</Button>
+                                    <Button variant="ghost" className="self-center" size="sm" onClick={() => removeExperiencia(index)}>Remover</Button>
+                                </div>
                             </div>
                         ))}
                     </div>
                 </div>
                 <Separator className="my-6" />
-                <label htmlFor="">Idiomas</label>
+
+                {/* Seção Idiomas */}
+                <div className="flex flex-col gap-6">
+                    <label htmlFor="">Seção Idiomas</label>
+                    <Button className="w-30 self-center" onClick={() => appendIdioma({ idioma: "", nivel: "" })}>Adicionar</Button>
+                    {idiomaFields.map((field, index) => (
+                        <div key={field.id} className="flex flex-col gap-6 p-4 border rounded-md relative">
+                            <div className="flex flex-col gap-2">
+                                <Label htmlFor="idioma">Idioma</Label>
+                                <Input id="idioma" placeholder="" {...register(`idiomas.${index}.idioma`)}></Input>
+                            </div>
+                            <div className="flex flex-col gap-2">
+                                <Label htmlFor="nivel">Nível de Fluência</Label>
+                                <Controller
+                                    control={control}
+                                    name={`idiomas.${index}.nivel`}
+                                    render={({ field }) => (
+                                        <Select value={field.value} onValueChange={field.onChange}>
+                                            <SelectTrigger className="w-full">
+                                                <SelectValue placeholder="Nível de Fluência" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectGroup>
+                                                    <SelectLabel>Nivel</SelectLabel>
+                                                    <SelectItem value="Básico">Básico</SelectItem>
+                                                    <SelectItem value="Intermediário">Intermediário</SelectItem>
+                                                    <SelectItem value="Avançado">Avançado</SelectItem>
+                                                    <SelectItem value="Fluente">Fluente</SelectItem>
+                                                </SelectGroup>
+                                            </SelectContent>
+                                        </Select>
+                                    )}
+                                />
+                            </div>
+                            <Separator />
+                            <div className="flex justify-between">
+                                <Button variant="outline" size="sm" >Editar</Button>
+                                <Button variant="ghost" className="self-center" size="sm" onClick={() => removeIdioma(index)}>Remover</Button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
                 <Separator className="my-6" />
-                <label htmlFor="">Formação Complementar(Certificados)</label>
+
+                {/* Seção Formação Complementar */}
+                <div className="flex flex-col gap-6">
+                    <label htmlFor="">Seção Formação Complementar(Certificados)</label>
+                    <Button className="w-30 self-center" onClick={() => appendFormacaoComplementar({ curso: "", plataforma: "", cargaHoraria: "" })}>Adicionar</Button>
+                    {formacaoComplementarFields.map((field, index) => (
+                        <div key={field.id} className="flex flex-col gap-6 p-4 border rounded-md relative">
+                            <div className="flex flex-col gap-2">
+                                <Label htmlFor="curso">Nome do Curso</Label>
+                                <Input id="curso" placeholder="" {...register(`formacaoComplementar.${index}.curso`)}></Input>
+                            </div>
+                            <div className="flex flex-col gap-2">
+                                <Label htmlFor="plataforma">Nome da Plataforma</Label>
+                                <Input id="plataforma" placeholder="" {...register(`formacaoComplementar.${index}.plataforma`)}></Input>
+                            </div>
+                            <div className="flex flex-col gap-2">
+                                <Label htmlFor="cargaHoraria">Carga Horaria do curso</Label>
+                                <Input id="cargaHoraria" placeholder="12h" {...register(`formacaoComplementar.${index}.cargaHoraria`)}></Input>
+                            </div>
+                            <Separator/>
+                            <div className="flex justify-between">
+                                <Button variant="outline" size="sm" >Editar</Button>
+                                <Button variant="ghost" size="sm" onClick={() => removeFormacaoComplementar(index)}>Remover</Button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
                 <Separator className="my-6" />
-                <label htmlFor="">Informação Adicionais(Projetos Pessoais)</label>
+
+                {/* Seção Informações Adicionais */}
+                <div className="flex flex-col gap-6">
+                    <label htmlFor="">Seção Informação Adicionais(Projetos Pessoais)</label>
+                    <Button className="w-30 self-center" onClick={() => appendInformacoesAdicionais({ info: "" })}>Adicionar</Button>
+                    {informacoesAdicionaisFields.map((field, index) => (
+                        <div key={field.id} className="flex flex-col gap-6 p-4 border rounded-md relative">
+                            <div className="flex flex-col gap-2">
+                                <Label htmlFor="info">Informação Adicional</Label>
+                                <Input id="info" placeholder="" {...register(`informacoesAdicionais.${index}.info`)}/>
+                            </div>
+                            <Separator/>
+                            <div className="flex justify-between">
+                                <Button variant="outline" size="sm">Editar</Button>
+                                <Button variant="ghost" size="sm" onClick={() => removeInformacoesAdicionais(index)}>Remover</Button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                <Separator className="mt-6"/>
             </CardContent>
             <CardFooter className="flex justify-between">
                 <Button variant="outline">Salvar Rascunho</Button>

@@ -56,9 +56,17 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase',
         marginBottom: 2,
         paddingBottom: 8,
-    }
+    },
 
-    //
+    // bullet list
+    bList: {
+        paddingLeft: 10,
+    },
+
+    fokus: {
+        fontWeight: 'bold',
+    }
+    
 })
 
 export const ResumePDF = ({ data }: ResumePDFProps) => (
@@ -75,26 +83,64 @@ export const ResumePDF = ({ data }: ResumePDFProps) => (
                 <Link src={data.linkedin}>{data.linkedin ? `${data.linkedin}` : ''}</Link>
             </View>
 
-            {/* Seção de objetivo */}
+            {/* Seção de objetivo e resumo profissional */}
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>objetivo</Text>
                 <Text>{data.cargo || 'Cargo Desejado'}</Text>
             </View>
 
-            {/* Seção de resumo profissional */}
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>resumo profissional</Text>
                 <Text>{data.resumoProfissional || 'Seu resumo profissional...'}</Text>
             </View>
 
-            {/* Seção de Idiomas */}
+            {/* Seção formação acadêmica */}
+            <View style={styles.section}>
+                <Text style={styles.sectionTitle}>formação acadêmica</Text>
+                {data.formacao.map(({ curso, instituicao, conclusao }, idx) => (
+                    <Text key={idx} style={styles.bList}>• <Text style={styles.fokus}>{curso}</Text> pela {instituicao} concluído em {conclusao}</Text>
+                ))}
+            </View>
+            
 
+            {/* Seção de experiencia profissional */}
+            <View style={styles.section}>
+                <Text style={styles.sectionTitle}>experiência profissional</Text>
+                {data.experiencia.map(({ empresa, tamanhoEmpresa, cargo, inicio, fim, descricao }, idx) => (
+                    <View key={idx} style={{ paddingVertical: 7}}>
+                        <Text style={styles.bList}><Text style={styles.fokus}> - {empresa}</Text> (Empresa de {tamanhoEmpresa} porte)</Text>
+                        <Text style={styles.fokus}>{cargo}</Text>
+                        <Text>{inicio} até {fim}</Text>
+                        {descricao.map((value, idx2)  => (
+                            <Text key={idx2} style={styles.bList}>• {value}</Text>
+                        ))}
+                    </View>
+                ))}
+            </View>
+
+            {/* Seção de Idiomas */}
+            <View style={styles.section}>
+                <Text style={styles.sectionTitle}>idioma</Text>
+                {data.idiomas.map(({ idioma, nivel }, idx) => (
+                    <Text key={idx}>{idioma} - {nivel}</Text>
+                ))}
+            </View>
 
             {/* Seção de Formação Complementar */}
-
+            <View style={styles.section}>
+                <Text style={styles.sectionTitle}>formação complementar</Text>
+                {data.formacaoComplementar.map(({ curso, plataforma, cargaHoraria }, idx) => (
+                   <Text key={idx} style={styles.bList}>• <Text style={styles.fokus}>{curso}</Text> ({plataforma}) - {cargaHoraria};</Text> 
+                ))}
+            </View>
 
             {/* Seção de Informações adicionais */}
-            
+            <View style={styles.section}>
+                <Text style={styles.sectionTitle}>informações adicionais</Text>
+                {data.informacoesAdicionais.map(({ info }, idx) => (
+                    <Text key={idx} style={styles.bList}>• {info};</Text>
+                ))}
+            </View>
 
         </Page>
     </Document>

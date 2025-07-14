@@ -26,7 +26,7 @@ import { ExperienciaItem } from "@/types"
 
 export default function DrawerExperiencia({ onAdd }: { onAdd: (data: ExperienciaItem) => void }) {
 
-  const [localData, setLocalData] = useState({ empresa: '', tamanhoEmpresa: '', cargo: '', inicio: '', fim: '', descricao: [] });
+  const [localData, setLocalData] = useState<ExperienciaItem>({ empresa: '', tamanhoEmpresa: '', cargo: '', inicio: '', fim: '', descricao: ['', '', ''] });
   
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setLocalData(prev => ({
@@ -36,23 +36,29 @@ export default function DrawerExperiencia({ onAdd }: { onAdd: (data: Experiencia
     }
 
     const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      setLocalData(prev => ({
-        ...prev,
-        [e.target.id]: e.target.value 
-      }))
-    }
+    // Extrai o índice do id (descricao1, descricao2, descricao3)
+      const match = e.target.id.match(/^descricao(\d)$/);
+      if (match) {
+        const idx = Number(match[1]) - 1; // transforma em 0, 1 ou 2
+        setLocalData(prev => {
+          const newDescricao = [...prev.descricao] as [string, string, string];
+          newDescricao[idx] = e.target.value;
+          return { ...prev, descricao: newDescricao };
+        });
+      }
+    };
   
     const handleConfirm = () => {
       onAdd(localData);
       clearFields();
     }
   
-    const clearFields = () => setLocalData({ empresa: '', tamanhoEmpresa: '', cargo: '', inicio: '', fim: '', descricao: [] });
+    const clearFields = () => setLocalData({ empresa: '', tamanhoEmpresa: '', cargo: '', inicio: '', fim: '', descricao: ['', '', ''] });
 
   return (
     <Drawer direction="right">
       <DrawerTrigger asChild>
-        <Button className="w-30 self-center">+</Button>
+        <Button className="w-30 self-center">Adicionar</Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
@@ -64,7 +70,10 @@ export default function DrawerExperiencia({ onAdd }: { onAdd: (data: Experiencia
           <div className="flex flex-col gap-2">
             <Label htmlFor="empresa">Empresa</Label>
             <Input id="empresa" value={localData.empresa} onChange={handleChange} placeholder="Banco do Brasil"/>
-            <Select>
+            <Select
+              value={localData.tamanhoEmpresa}
+              onValueChange={value => setLocalData(prev => ({ ...prev, tamanhoEmpresa: value as '' | 'pequeno' | 'médio' | 'grande' }))}
+            >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Tamanho da Empresa" />
               </SelectTrigger>

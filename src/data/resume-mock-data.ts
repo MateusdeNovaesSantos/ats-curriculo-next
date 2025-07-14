@@ -61,7 +61,8 @@ export const mockResumeData: ResumeInputs = {
     { curso: "SQL para Análise de Dados Do básico ao avançado", plataforma: "Udemy", cargaHoraria: "6h" },
   ],
   informacoesAdicionais: [
-    "CNH A e B",
-    "Projeto Web com NEXT.js e Flask"
+    { info: "CNH A e B" },
+    { info: "Projeto Web com NEXT.js e Flask" },
+    { info: "Projeto Gerador de currículo" }
   ]
 };

@@ -6,22 +6,26 @@ export type FormacaoItem = {
 
 export type ExperienciaItem = {
     empresa: string;
-    tamanhoEmpresa: string;
+    tamanhoEmpresa: '' | 'pequeno' | 'médio' | 'grande';
     cargo: string;
     inicio: string;
     fim: string;
-    descricao: string[];
+    descricao: [string, string, string];
 }
 
 export type Idiomas = {
     idioma: string;
-    nivel: 'Básico' | 'Intermediário' | 'Avançado' | 'Fluente';
+    nivel: '' | 'Básico' | 'Intermediário' | 'Avançado' | 'Fluente';
 }
 
 export type FormacaoComplementarItem = {
     curso: string;
     plataforma: string;
     cargaHoraria: string;
+}
+
+export type InformacoesAdicionais = {
+    info: string;
 }
 
 export type ResumeInputs = {
@@ -37,5 +41,5 @@ export type ResumeInputs = {
     experiencia: ExperienciaItem[];
     idiomas: Idiomas[];
     formacaoComplementar: FormacaoComplementarItem[];
-    informacoesAdicionais: string[],
+    informacoesAdicionais: InformacoesAdicionais[],
 };
