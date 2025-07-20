@@ -9,13 +9,23 @@ Este projeto foi desenvolvido como uma ferramenta para montar um currículo comp
   * **Formulário Intuitivo:** Interface baseada em cards para preenchimento de informações pessoais, objetivo, resumo profissional, formação e experiência.
   * **Seções Dinâmicas:** Adicione múltiplas entradas para "Formação Acadêmica" e "Experiência Profissional" através de menus laterais (drawers).
   * **Tema Customizável:** Suporte para temas Light, Dark e de Sistema.
-  * **Exportação para PDF (Planejado):** Funcionalidade futura para gerar um arquivo PDF do currículo preenchido.
+  * **Geração de PDF:** Exportação do currículo preenchido para um arquivo PDF com texto selecionável, otimizado para ATS.
+  * **Salvamento Local:** Função "Salvar Rascunho" que utiliza o `localStorage` do navegador para persistir os dados.
+
+## 🚧 Próximas Etapas / Roadmap
+
+  - [ ] Adicionar responsividade para uma melhor experiência em dispositivos móveis.
+  - [ ] Componentizar as seções internas do formulário para melhor organização do código.
+  - [ ] Implementar a funcionalidade de "Editar" para os itens de Formação e Experiência, reutilizando os componentes `Drawer`.
+  - [ ] Adicionar um painel de pré-visualização do PDF em tempo real (visível em desktops).
+  - [ ] Implementar validações e máscaras para os campos (ex: limites de idade, formato do número de celular).
 
 ## 🛠️ Stack de Tecnologias
 
   * **Framework:** [Next.js](https://nextjs.org/)
   * **Linguagem:** [TypeScript](https://www.typescriptlang.org/)
   * **Biblioteca de UI:** [shadcn/ui](https://ui.shadcn.com/)
+  * **Geração de PDF:** [@react-pdf/renderer](https://react-pdf.org/)
   * **Estilização:** [Tailwind CSS](https://tailwindcss.com/)
   * **Ícones:** [Lucide React](https://lucide.dev/)
   * **Gerenciador de Pacotes:** [pnpm](https://pnpm.io/)
