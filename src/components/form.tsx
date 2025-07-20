@@ -227,7 +227,6 @@ export default function Form() {
                             </div>
                             <Separator />
                             <div className="flex justify-between">
-                                <Button variant="outline" size="sm" >Editar</Button>
                                 <Button variant="ghost" className="self-center" size="sm" onClick={() => removeIdioma(index)}>Remover</Button>
                             </div>
                         </div>
@@ -255,7 +254,6 @@ export default function Form() {
                             </div>
                             <Separator/>
                             <div className="flex justify-between">
-                                <Button variant="outline" size="sm" >Editar</Button>
                                 <Button variant="ghost" size="sm" onClick={() => removeFormacaoComplementar(index)}>Remover</Button>
                             </div>
                         </div>
@@ -275,7 +273,6 @@ export default function Form() {
                             </div>
                             <Separator/>
                             <div className="flex justify-between">
-                                <Button variant="outline" size="sm">Editar</Button>
                                 <Button variant="ghost" size="sm" onClick={() => removeInformacoesAdicionais(index)}>Remover</Button>
                             </div>
                         </div>
