@@ -82,7 +82,7 @@ export default function Form() {
 
 
     return (
-        <Card className="w-[430px]">
+        <Card>
             <CardHeader>
                 <CardTitle>Faça seu currículo ATS</CardTitle>
                 <CardDescription>
