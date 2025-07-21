@@ -58,7 +58,7 @@ export default function DrawerExperiencia({ onAdd }: { onAdd: (data: Experiencia
   return (
     <Drawer direction="right">
       <DrawerTrigger asChild>
-        <Button className="w-30 self-center">Adicionar</Button>
+        <Button type="button" className="w-30 self-center">Adicionar</Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>

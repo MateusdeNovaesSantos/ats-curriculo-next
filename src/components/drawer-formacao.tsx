@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Drawer,
   DrawerClose,
@@ -14,9 +14,18 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { FormacaoItem } from "@/types"
 
-export default function DrawerFormacao({ onAdd }: { onAdd: (data: FormacaoItem) => void }) {
+type DrawerFormacaoProps = {
+  onSave: (data: FormacaoItem) => void;
+  initialData?: FormacaoItem;
+}
+
+export default function DrawerFormacao({ onSave, initialData }: DrawerFormacaoProps) {
 
   const [localData, setLocalData] = useState({ curso: '', instituicao: '', conclusao: '' });
+
+  useEffect(() => {
+    setLocalData(initialData || { curso: '', instituicao: '', conclusao: '' });
+  }, [initialData])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLocalData(prev => ({
@@ -26,7 +35,7 @@ export default function DrawerFormacao({ onAdd }: { onAdd: (data: FormacaoItem) 
   }
 
   const handleConfirm = () => {
-    onAdd(localData);
+    onSave(localData);
     clearFields();
   }
 
@@ -35,7 +44,7 @@ export default function DrawerFormacao({ onAdd }: { onAdd: (data: FormacaoItem) 
   return (
     <Drawer direction="right">
       <DrawerTrigger asChild>
-        <Button className="w-30 self-center">Adicionar</Button>
+        <Button type="button" className="w-30 self-center">Adicionar</Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
@@ -59,7 +68,7 @@ export default function DrawerFormacao({ onAdd }: { onAdd: (data: FormacaoItem) 
         </div>
 
         <DrawerFooter>
-          <DrawerClose>
+          <DrawerClose asChild>
             <Button onClick={handleConfirm} className="w-full mb-2">Confirmar</Button>
             <Button variant="outline" onClick={clearFields} className="w-full">Cancelar</Button>
           </DrawerClose>
