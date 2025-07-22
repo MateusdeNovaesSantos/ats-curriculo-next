@@ -1,7 +1,9 @@
+"use client";
+
 /* React Imports */
 import React from "react";
 import dynamic from "next/dynamic";
-import { UseFormReturn, SubmitHandler } from "react-hook-form";
+import { UseFormReturn, UseFormGetValues } from "react-hook-form";
 
 /* Form Sections Components Imports */
 import { PersonalInfoSection } from "@/components/form-sections/PersonalInfoSection";
@@ -19,20 +21,22 @@ import { Separator } from "@/components/ui/separator";
 import { ResumeInputs } from "@/types";
 import { ResumePDF } from "@/components/ResumePDF"
 
-type FormProps = UseFormReturn<ResumeInputs>
+type FormProps = UseFormReturn<ResumeInputs> & {
+    getValues: UseFormGetValues<ResumeInputs>;
+}
 
 const PDFDownloadLinkDynamic = dynamic(
     () => import('@react-pdf/renderer').then((mod) => mod.PDFDownloadLink),
     {
-        ssr: false, // ssr: false é a chave! Significa "Server-Side Rendering: false"
+        ssr: false,
         loading: () => <Button disabled>Gerando PDF...</Button>
     }
 )
 
-export default function Form({ register, control, handleSubmit, watch, formState: { errors } }: FormProps) {
+export default function Form({ register, control, watch, getValues, formState: { errors } }: FormProps) {
     
     const handleSaveDraft = () => {
-        const currentData = watch();
+        const currentData = getValues();
         localStorage.setItem('resumeDraft', JSON.stringify(currentData));
         alert('Rascunho salvo com sucesso!')
     }
@@ -45,61 +49,59 @@ export default function Form({ register, control, handleSubmit, watch, formState
                     Monte seu currículo otimizado para ATS completo muito simples e rápido
                 </CardDescription>
             </CardHeader>
-            {/* <pre className="mt-4 mx-4 p-4 bg-muted rounded-md text-sm">
-                {JSON.stringify(watch(), null, 2)}
-            </pre> */}
             <CardContent>
-                <form>
+                {/* Seção Informações Pessoais */}
+                <PersonalInfoSection 
+                    register={register} 
+                    errors={errors}
+                />
                 
-                    {/* Seção Informações Pessoais */}
-                    <PersonalInfoSection 
-                        register={register} 
-                        errors={errors}
-                    />
-                    
-                    {/* Seção Formação Acadêmica */}
-                    <FormacaoSection
-                        control={control}
-                        register={register}
-                        errors={errors}
-                    /> 
-                    <Separator className="my-6" />
+                {/* Seção Formação Acadêmica */}
+                <FormacaoSection
+                    control={control}
+                    register={register}
+                    errors={errors}
+                /> 
+                <Separator className="my-6" />
 
-                    {/* Seção Experiência Profissional */}
-                    <ExperienciaSection
-                        control={control}
-                        register={register}
-                        errors={errors}
-                        />
-                    <Separator className="my-6" />
-
-                    {/* Seção Idiomas */}
-                    <IdiomasSection
-                        control={control}
-                        register={register}
-                        errors={errors}
+                {/* Seção Experiência Profissional */}
+                <ExperienciaSection
+                    control={control}
+                    register={register}
+                    errors={errors}
                     />
-                    <Separator className="my-6" />
+                <Separator className="my-6" />
 
-                    {/* Seção Formação Complementar */}
-                    <ComplementarSection
-                        control={control}
-                        register={register}
-                        errors={errors}
-                    />
-                    <Separator className="my-6" />
+                {/* Seção Idiomas */}
+                <IdiomasSection
+                    control={control}
+                    register={register}
+                    errors={errors}
+                />
+                <Separator className="my-6" />
 
-                    {/* Seção Informações Adicionais */}
-                    <AdicionalInfoSection
-                        control={control}
-                        register={register}
-                        errors={errors}
-                    />
-                    <Separator className="mt-6"/>
-                </form>
+                {/* Seção Formação Complementar */}
+                <ComplementarSection
+                    control={control}
+                    register={register}
+                    errors={errors}
+                />
+                <Separator className="my-6" />
+
+                {/* Seção Informações Adicionais */}
+                <AdicionalInfoSection
+                    control={control}
+                    register={register}
+                    errors={errors}
+                />
+                <Separator className="mt-6"/>
             </CardContent>
             <CardFooter className="flex justify-between">
-                <Button type="button" variant="outline" onClick={handleSaveDraft}>Salvar Rascunho</Button>
+                <Button 
+                    type="button" 
+                    variant="outline" 
+                    onClick={handleSaveDraft}
+                >Salvar Rascunho</Button>
                 <PDFDownloadLinkDynamic
                     document={<ResumePDF data={watch()} />}
                     fileName="curriculo.pdf"

@@ -82,6 +82,7 @@ export const ExperienciaSection = ({ control, register, errors }: Props) => {
         setLocalData(prev => ({ ...prev, descricao: newDescricao }));
     }
 
+    // hooks
     const isDesktop = useMediaQuery("(min-width: 768px)");
 
     return (
@@ -145,8 +146,17 @@ export const ExperienciaSection = ({ control, register, errors }: Props) => {
                             </div>
                         </div>
                     <DrawerFooter>
-                        <Button type="button" onClick={handleSave} className="w-full mb-2" >Confirmar</Button>
-                        <Button type="button" variant="outline" onClick={() => setIsDrawerOpen(false)} className="w-full">Cancelar</Button>
+                        <Button 
+                            type="button" 
+                            className="w-full mb-2" 
+                            onClick={handleSave} 
+                        >Confirmar</Button>
+                        <Button 
+                            type="button" 
+                            variant="outline" 
+                            className="w-full"
+                            onClick={() => setIsDrawerOpen(false)} 
+                        >Cancelar</Button>
                     </DrawerFooter>
                 </DrawerContent>
             </Drawer>
@@ -166,8 +176,18 @@ export const ExperienciaSection = ({ control, register, errors }: Props) => {
                         {/* Botão para remover */}
                         <Separator />
                         <div className="flex justify-between">
-                            <Button type="button" variant="outline" size="sm" onClick={() => handleEdit(index)} >Editar</Button>
-                            <Button type="button" variant="ghost" className="self-center" size="sm" onClick={() => remove(index)}>Remover</Button>
+                            <Button 
+                                type="button" 
+                                variant="outline" 
+                                size="sm" 
+                                onClick={() => handleEdit(index)}
+                            >Editar</Button>
+                            <Button 
+                                type="button" 
+                                variant="ghost"
+                                size="sm" 
+                                onClick={() => remove(index)}
+                            >Remover</Button>
                         </div>
                     </div>
                 ))}

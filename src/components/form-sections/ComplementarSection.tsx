@@ -42,7 +42,12 @@ export const ComplementarSection = ({ control, register, errors}: Props) => {
                     </div>
                     <Separator/>
                     <div className="flex justify-between">
-                        <Button type="button" variant="ghost" size="sm" onClick={() => remove(index)}>Remover</Button>
+                        <Button 
+                            type="button" 
+                            variant="ghost" 
+                            size="sm" 
+                            onClick={() => remove(index)}
+                        >Remover</Button>
                     </div>
                 </div>
             ))}
