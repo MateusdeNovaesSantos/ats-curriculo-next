@@ -64,8 +64,8 @@ export const FormacaoSection = ({ control, register, errors}: Props) => {
                         {/* Botão para remover */}
                         <Separator />
                         <div className="flex justify-between">
-                            <Button type="button" variant="outline" size="sm" onClick={() => setEditingIndex(index)}>Editar</Button>
-                            <Button type="button" variant="ghost" size="sm" onClick={() => handleEdit(index)}>Remover</Button>
+                            <Button type="button" variant="outline" size="sm" onClick={() => handleEdit(index)}>Editar</Button>
+                            <Button type="button" variant="ghost" size="sm" onClick={() => remove(index)}>Remover</Button>
                         </div>
                     </div>
                 ))}
