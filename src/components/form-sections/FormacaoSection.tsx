@@ -1,6 +1,6 @@
 /* React Imports */
 import { useState, useEffect } from "react";
-import { Control, FieldErrors, UseFormRegister, useFieldArray } from "react-hook-form";
+import { Control, UseFormRegister, useFieldArray } from "react-hook-form";
 import { useMediaQuery } from "@/lib/hooks/use-media-query"
 
 /* Types Imports */

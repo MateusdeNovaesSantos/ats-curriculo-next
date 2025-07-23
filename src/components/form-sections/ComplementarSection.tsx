@@ -1,5 +1,5 @@
 /* React Imports */
-import { Control, UseFormRegister, useFieldArray, FieldErrors } from "react-hook-form";
+import { Control, UseFormRegister, useFieldArray } from "react-hook-form";
 
 /* Types Imports */
 import { ResumeInputs } from "@/types";
