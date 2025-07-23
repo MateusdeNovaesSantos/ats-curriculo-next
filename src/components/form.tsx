@@ -2,7 +2,7 @@
 
 /* React Imports */
 import React from "react";
-/* import dynamic from "next/dynamic"; */
+import dynamic from "next/dynamic";
 import { UseFormReturn } from "react-hook-form";
 
 /* Form Sections Components Imports */
@@ -19,11 +19,10 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
 import { ResumeInputs } from "@/types";
-/* import { ResumePDF } from "@/components/ResumePDF" */
+import { ResumePDF } from "@/components/ResumePDF"
 
 type FormProps = UseFormReturn<ResumeInputs>
 
-/* 
 const PDFDownloadLinkDynamic = dynamic(
     () => import('@react-pdf/renderer').then((mod) => mod.PDFDownloadLink),
     {
@@ -31,7 +30,6 @@ const PDFDownloadLinkDynamic = dynamic(
         loading: () => <Button disabled>Gerando PDF...</Button>
     }
 ) 
-*/
 
 export default function Form({ register, control, watch, handleSubmit, getValues, formState: { errors } }: FormProps) {
     
@@ -108,11 +106,9 @@ export default function Form({ register, control, watch, handleSubmit, getValues
                     variant="outline" 
                     onClick={handleSaveDraft}
                 >Salvar Rascunho</Button>
-                <Button 
-                        type="button"
-                >Gerar PDF</Button>
-                {/* 
+                
                 <PDFDownloadLinkDynamic
+                    key={JSON.stringify(watch())}
                     document={<ResumePDF data={watch()} />}
                     fileName="curriculo.pdf"
                 >
@@ -120,7 +116,6 @@ export default function Form({ register, control, watch, handleSubmit, getValues
                         type="button"
                     >Gerar PDF</Button>
                 </PDFDownloadLinkDynamic> 
-                */}
             </CardFooter>
         </Card>
     );

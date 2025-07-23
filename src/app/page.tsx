@@ -1,13 +1,20 @@
 "use client";
 
+/* React Imports */
 import { useEffect } from "react";
-/* import dynamic from "next/dynamic"; */
+import dynamic from "next/dynamic";
 import { useForm } from "react-hook-form";
-import { ResumeInputs} from "@/types";
+
+/* Types */
+import { ResumeInputs } from "@/types";
+
+/* UI Imports */
 import { ModeToggle } from "@/components/mode-toggle";
+
+/* Componentes externos */
 import Form from "@/components/form";
 
-// Estado inicial do form.
+/* Estado inicial do form. */
 const defaultValues: ResumeInputs = {
   nomeCompleto: '',
   celular: '',
@@ -24,10 +31,10 @@ const defaultValues: ResumeInputs = {
   informacoesAdicionais: [],
 };
 
-/* const ResumePreviewDynamic = dynamic(
+const ResumePreviewDynamic = dynamic(
   () => import("@/components/ResumePreview").then(mod => mod.ResumePreview),
   { ssr: false }
-) */
+)
 
 export default function Home() {
 
@@ -47,6 +54,8 @@ export default function Home() {
     }
   }, [formMethods])
 
+  const currentFormData = formMethods.watch()
+
   return (
     <main className="grid grid-cols-1 lg:grid-cols-2 h-screen">
       {/* Coluna do Formulário */}
@@ -61,8 +70,11 @@ export default function Home() {
 
       {/* Coluna do Preview (escondida no mobile) */}
       <div className="hidden lg:block h-full">
-        {/* 3. O Preview lê os dados em tempo real usando o 'watch' que vem do formMethods */}
-        {/* <ResumePreviewDynamic data={formMethods.watch()} /> */}
+        {/* O Preview lê os dados em tempo real usando o 'watch' que vem do formMethods */}
+        <ResumePreviewDynamic
+          key={JSON.stringify(currentFormData)}
+          data={currentFormData}
+        />
       </div>
     </main>
   );

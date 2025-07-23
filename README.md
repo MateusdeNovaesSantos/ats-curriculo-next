@@ -14,10 +14,10 @@ Este projeto foi desenvolvido como uma ferramenta para montar um currículo comp
 
 ## 🚧 Próximas Etapas / Roadmap
 
-  - [ ] Adicionar responsividade para uma melhor experiência em dispositivos móveis.
-  - [ ] Componentizar as seções internas do formulário para melhor organização do código.
-  - [ ] Implementar a funcionalidade de "Editar" para os itens de Formação e Experiência, reutilizando os componentes `Drawer`.
-  - [ ] Adicionar um painel de pré-visualização do PDF em tempo real (visível em desktops).
+  - [x] Adicionar responsividade para uma melhor experiência em dispositivos móveis.
+  - [x] Componentizar as seções internas do formulário para melhor organização do código.
+  - [x] Implementar a funcionalidade de "Editar" para os itens de Formação e Experiência, reutilizando os componentes `Drawer`.
+  - [x] Adicionar um painel de pré-visualização do PDF em tempo real (visível em desktops).
   - [ ] Implementar validações e máscaras para os campos (ex: limites de idade, formato do número de celular).
 
 ## 🛠️ Stack de Tecnologias
@@ -29,6 +29,18 @@ Este projeto foi desenvolvido como uma ferramenta para montar um currículo comp
   * **Estilização:** [Tailwind CSS](https://tailwindcss.com/)
   * **Ícones:** [Lucide React](https://lucide.dev/)
   * **Gerenciador de Pacotes:** [pnpm](https://pnpm.io/)
+
+## 💻 Desafios Superados Durante o Desenvolvimento
+
+Este projeto apresentou diversos desafios técnicos interessantes, cuja superação foi fundamental para o meu aprendizado em desenvolvimento web moderno com Next.js e React.
+
+Gerenciamento de Estado Complexo: O formulário, com suas múltiplas seções dinâmicas, exigiu a implementação de uma arquitetura de estado robusta. A solução foi "elevar o estado" (lifting state up), centralizando a lógica do react-hook-form no componente page.tsx para que pudesse ser compartilhado entre o formulário principal (Form.tsx) e o painel de pré-visualização (ResumePreview.tsx).
+
+Bugs de Hidratação (Hydration Mismatch): A aplicação apresentou erros de hidratação devido a lógicas que dependiam de APIs do navegador (localStorage e window.matchMedia). A solução foi garantir que a primeira renderização no servidor e no cliente fossem idênticas, e então usar o hook useEffect para carregar os dados específicos do cliente (rascunho salvo e tamanho da tela) de forma assíncrona, após a hidratação bem-sucedida.
+
+Incompatibilidade de Dependências: O projeto encontrou um bug crítico e persistente (TypeError: Eo is not a function) ao usar a função remove do useFieldArray em conjunto com a biblioteca @react-pdf/renderer. Após um processo de depuração e uma série de tentativas de correção que incluiu o downgrade de versões do React e a limpeza completa do cache de pacotes (pnpm store prune), a solução final foi contornar o bug da biblioteca, forçando uma re-renderização completa do componente de PDF através de uma prop key dinâmica (key={JSON.stringify(data)}).
+
+Componentização e Encapsulamento: O componente principal do formulário (Form.tsx) foi totalmente refatorado. A lógica de cada seção, incluindo a manipulação de arrays com useFieldArray e o controle de componentes Drawer, foi encapsulada em seus próprios componentes de seção (FormacaoSection.tsx, ExperienciaSection.tsx, etc.), tornando o código mais limpo, modular e fácil de manter.
 
 ## 🚀 Como Executar o Projeto
 
