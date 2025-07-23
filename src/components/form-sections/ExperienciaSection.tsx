@@ -18,7 +18,6 @@ import { Separator } from "@/components/ui/separator";
 type Props = {
     control: Control<ResumeInputs>;
     register: UseFormRegister<ResumeInputs>;
-    errors: FieldErrors<ResumeInputs>;
 }
 
 const emptyExperiencia: ExperienciaItem = {
@@ -30,7 +29,7 @@ const emptyExperiencia: ExperienciaItem = {
     descricao: ['', '', '']
 }
 
-export const ExperienciaSection = ({ control, register, errors }: Props) => {
+export const ExperienciaSection = ({ control, register }: Props) => {
     // A lógica do useFieldArray
     const { fields, append, remove, update } = useFieldArray({
         control,

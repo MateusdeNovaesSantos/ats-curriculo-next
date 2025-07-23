@@ -16,7 +16,6 @@ import { Separator } from "@/components/ui/separator";
 type Props = {
     control: Control<ResumeInputs>;
     register: UseFormRegister<ResumeInputs>;
-    errors: FieldErrors<ResumeInputs>;
 }
 
 const emptyFormacao: FormacaoItem = {
@@ -25,7 +24,7 @@ const emptyFormacao: FormacaoItem = {
     conclusao: ''
 }
 
-export const FormacaoSection = ({ control, register, errors}: Props) => {
+export const FormacaoSection = ({ control, register}: Props) => {
     // A lógica do useFieldArray
     const { fields, append, remove, update } = useFieldArray({
         control,

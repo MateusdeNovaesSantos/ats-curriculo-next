@@ -4,17 +4,16 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
 /* React Imports */
-import { UseFormRegister, FieldErrors } from "react-hook-form";
+import { UseFormRegister } from "react-hook-form";
 
 /* Types Imports */
 import { ResumeInputs } from "@/types";
 
 type Props = {
     register: UseFormRegister<ResumeInputs>;
-    errors: FieldErrors<ResumeInputs>;
 }
 
-export const PersonalInfoSection = ({ register, errors }: Props) => {
+export const PersonalInfoSection = ({ register }: Props) => {
     return (
         <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-2">

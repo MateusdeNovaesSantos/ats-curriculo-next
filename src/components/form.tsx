@@ -31,7 +31,7 @@ const PDFDownloadLinkDynamic = dynamic(
     }
 ) 
 
-export default function Form({ register, control, watch, handleSubmit, getValues, formState: { errors } }: FormProps) {
+export default function Form({ register, control, watch, handleSubmit, getValues }: FormProps) {
     
     const handleSaveDraft = () => {
         const currentData = getValues();
@@ -55,15 +55,13 @@ export default function Form({ register, control, watch, handleSubmit, getValues
                 <form onSubmit={handleSubmit(onSubmit)}>
                     {/* Seção Informações Pessoais */}
                     <PersonalInfoSection 
-                        register={register} 
-                        errors={errors}
+                        register={register}
                     />
                     
                     {/* Seção Formação Acadêmica */}
                     <FormacaoSection
                         control={control}
                         register={register}
-                        errors={errors}
                     /> 
                     <Separator className="my-6" />
 
@@ -71,7 +69,6 @@ export default function Form({ register, control, watch, handleSubmit, getValues
                     <ExperienciaSection
                         control={control}
                         register={register}
-                        errors={errors}
                         />
                     <Separator className="my-6" />
 
@@ -79,7 +76,6 @@ export default function Form({ register, control, watch, handleSubmit, getValues
                     <IdiomasSection
                         control={control}
                         register={register}
-                        errors={errors}
                     />
                     <Separator className="my-6" />
 
@@ -87,7 +83,6 @@ export default function Form({ register, control, watch, handleSubmit, getValues
                     <ComplementarSection
                         control={control}
                         register={register}
-                        errors={errors}
                     />
                     <Separator className="my-6" />
 
@@ -95,7 +90,6 @@ export default function Form({ register, control, watch, handleSubmit, getValues
                     <AdicionalInfoSection
                         control={control}
                         register={register}
-                        errors={errors}
                     />
                     <Separator className="mt-6"/>
                 </form>

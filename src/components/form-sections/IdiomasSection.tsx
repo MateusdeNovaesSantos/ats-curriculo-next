@@ -14,10 +14,9 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 type Props = {
     control: Control<ResumeInputs>;
     register: UseFormRegister<ResumeInputs>;
-    errors: FieldErrors<ResumeInputs>;
 }
 
-export const IdiomasSection = ({ control, register, errors }: Props) => {
+export const IdiomasSection = ({ control, register }: Props) => {
     const { fields, append, remove } = useFieldArray({
         control,
         name: "idiomas"
