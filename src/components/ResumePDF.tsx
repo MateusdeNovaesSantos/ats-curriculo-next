@@ -1,5 +1,5 @@
 import React from "react"
-import { Page, Text, View, Document, StyleSheet, Font, Link } from "@react-pdf/renderer"
+/* import { Page, Text, View, Document, StyleSheet, Font, Link } from "@react-pdf/renderer" */
 import { ResumeInputs } from "@/types"
 
 import LatoRegular from '@/assets/fonts/Lato-Regular.ttf';
@@ -11,7 +11,7 @@ type ResumePDFProps = {
     data: ResumeInputs;
 }
 
-Font.register({
+/* Font.register({
   family: 'Lato',
   fonts: [
     { src: LatoRegular },
@@ -19,9 +19,9 @@ Font.register({
     { src: LatoItalic, fontStyle: 'italic' },
     { src: LatoBoldItalic, fontWeight: 'bold', fontStyle: 'italic' },
   ],
-});
+}); */
 
-const styles = StyleSheet.create({
+/* const styles = StyleSheet.create({
 
     // Especificações da Página
     page: {
@@ -67,13 +67,13 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     }
     
-})
+}) */
 
 export const ResumePDF = ({ data }: ResumePDFProps) => (
-    <Document author="Mateus de Novaes Santos" title={`Currículo - ${data.nomeCompleto}`}>
+    {/* <Document author="Mateus de Novaes Santos" title={`Currículo - ${data.nomeCompleto}`}>
         <Page size="A4" style={styles.page}>
 
-            {/* Cabeçalho com dados dinâmicos */}
+            Cabeçalho com dados dinâmicos
             <View style={styles.header}>
                 <Text style={styles.name}>{data.nomeCompleto?.toUpperCase() || 'NOME COMPLETO'}</Text>
                 <Text>{data.idade ? `${data.idade} anos` : ''}</Text>
@@ -83,7 +83,7 @@ export const ResumePDF = ({ data }: ResumePDFProps) => (
                 <Link src={data.linkedin}>{data.linkedin ? `${data.linkedin}` : ''}</Link>
             </View>
 
-            {/* Seção de objetivo e resumo profissional */}
+            Seção de objetivo e resumo profissional
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>objetivo</Text>
                 <Text>{data.cargo || 'Cargo Desejado'}</Text>
@@ -94,7 +94,7 @@ export const ResumePDF = ({ data }: ResumePDFProps) => (
                 <Text>{data.resumoProfissional || 'Seu resumo profissional...'}</Text>
             </View>
 
-            {/* Seção formação acadêmica */}
+            Seção formação acadêmica
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>formação acadêmica</Text>
                 {data.formacao.map(({ curso, instituicao, conclusao }, idx) => (
@@ -103,7 +103,7 @@ export const ResumePDF = ({ data }: ResumePDFProps) => (
             </View>
             
 
-            {/* Seção de experiencia profissional */}
+            Seção de experiencia profissional
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>experiência profissional</Text>
                 {data.experiencia.map(({ empresa, tamanhoEmpresa, cargo, inicio, fim, descricao }, idx) => (
@@ -118,7 +118,7 @@ export const ResumePDF = ({ data }: ResumePDFProps) => (
                 ))}
             </View>
 
-            {/* Seção de Idiomas */}
+            Seção de Idiomas
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>idioma</Text>
                 {data.idiomas.map(({ idioma, nivel }, idx) => (
@@ -126,7 +126,7 @@ export const ResumePDF = ({ data }: ResumePDFProps) => (
                 ))}
             </View>
 
-            {/* Seção de Formação Complementar */}
+            Seção de Formação Complementar
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>formação complementar</Text>
                 {data.formacaoComplementar.map(({ curso, plataforma, cargaHoraria }, idx) => (
@@ -134,7 +134,7 @@ export const ResumePDF = ({ data }: ResumePDFProps) => (
                 ))}
             </View>
 
-            {/* Seção de Informações adicionais */}
+            Seção de Informações adicionais
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>informações adicionais</Text>
                 {data.informacoesAdicionais.map(({ info }, idx) => (
@@ -143,5 +143,5 @@ export const ResumePDF = ({ data }: ResumePDFProps) => (
             </View>
 
         </Page>
-    </Document>
+    </Document> */}
 )

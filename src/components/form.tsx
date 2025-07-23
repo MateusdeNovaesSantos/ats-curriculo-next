@@ -2,8 +2,8 @@
 
 /* React Imports */
 import React from "react";
-import dynamic from "next/dynamic";
-import { UseFormReturn, UseFormGetValues } from "react-hook-form";
+/* import dynamic from "next/dynamic"; */
+import { UseFormReturn } from "react-hook-form";
 
 /* Form Sections Components Imports */
 import { PersonalInfoSection } from "@/components/form-sections/PersonalInfoSection";
@@ -19,26 +19,30 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
 import { ResumeInputs } from "@/types";
-import { ResumePDF } from "@/components/ResumePDF"
+/* import { ResumePDF } from "@/components/ResumePDF" */
 
-type FormProps = UseFormReturn<ResumeInputs> & {
-    getValues: UseFormGetValues<ResumeInputs>;
-}
+type FormProps = UseFormReturn<ResumeInputs>
 
+/* 
 const PDFDownloadLinkDynamic = dynamic(
     () => import('@react-pdf/renderer').then((mod) => mod.PDFDownloadLink),
     {
         ssr: false,
         loading: () => <Button disabled>Gerando PDF...</Button>
     }
-)
+) 
+*/
 
-export default function Form({ register, control, watch, getValues, formState: { errors } }: FormProps) {
+export default function Form({ register, control, watch, handleSubmit, getValues, formState: { errors } }: FormProps) {
     
     const handleSaveDraft = () => {
         const currentData = getValues();
         localStorage.setItem('resumeDraft', JSON.stringify(currentData));
         alert('Rascunho salvo com sucesso!')
+    }
+
+    const onSubmit = (data: ResumeInputs) => {
+        console.log("Formulário 'submetido' (apenas para gerenciamento de estado)", data);
     }
 
     return (
@@ -50,51 +54,53 @@ export default function Form({ register, control, watch, getValues, formState: {
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                {/* Seção Informações Pessoais */}
-                <PersonalInfoSection 
-                    register={register} 
-                    errors={errors}
-                />
-                
-                {/* Seção Formação Acadêmica */}
-                <FormacaoSection
-                    control={control}
-                    register={register}
-                    errors={errors}
-                /> 
-                <Separator className="my-6" />
-
-                {/* Seção Experiência Profissional */}
-                <ExperienciaSection
-                    control={control}
-                    register={register}
-                    errors={errors}
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    {/* Seção Informações Pessoais */}
+                    <PersonalInfoSection 
+                        register={register} 
+                        errors={errors}
                     />
-                <Separator className="my-6" />
+                    
+                    {/* Seção Formação Acadêmica */}
+                    <FormacaoSection
+                        control={control}
+                        register={register}
+                        errors={errors}
+                    /> 
+                    <Separator className="my-6" />
 
-                {/* Seção Idiomas */}
-                <IdiomasSection
-                    control={control}
-                    register={register}
-                    errors={errors}
-                />
-                <Separator className="my-6" />
+                    {/* Seção Experiência Profissional */}
+                    <ExperienciaSection
+                        control={control}
+                        register={register}
+                        errors={errors}
+                        />
+                    <Separator className="my-6" />
 
-                {/* Seção Formação Complementar */}
-                <ComplementarSection
-                    control={control}
-                    register={register}
-                    errors={errors}
-                />
-                <Separator className="my-6" />
+                    {/* Seção Idiomas */}
+                    <IdiomasSection
+                        control={control}
+                        register={register}
+                        errors={errors}
+                    />
+                    <Separator className="my-6" />
 
-                {/* Seção Informações Adicionais */}
-                <AdicionalInfoSection
-                    control={control}
-                    register={register}
-                    errors={errors}
-                />
-                <Separator className="mt-6"/>
+                    {/* Seção Formação Complementar */}
+                    <ComplementarSection
+                        control={control}
+                        register={register}
+                        errors={errors}
+                    />
+                    <Separator className="my-6" />
+
+                    {/* Seção Informações Adicionais */}
+                    <AdicionalInfoSection
+                        control={control}
+                        register={register}
+                        errors={errors}
+                    />
+                    <Separator className="mt-6"/>
+                </form>
             </CardContent>
             <CardFooter className="flex justify-between">
                 <Button 
@@ -102,12 +108,19 @@ export default function Form({ register, control, watch, getValues, formState: {
                     variant="outline" 
                     onClick={handleSaveDraft}
                 >Salvar Rascunho</Button>
+                <Button 
+                        type="button"
+                >Gerar PDF</Button>
+                {/* 
                 <PDFDownloadLinkDynamic
                     document={<ResumePDF data={watch()} />}
                     fileName="curriculo.pdf"
                 >
-                    <Button type="button">Gerar PDF</Button>
-                </PDFDownloadLinkDynamic>
+                    <Button 
+                        type="button"
+                    >Gerar PDF</Button>
+                </PDFDownloadLinkDynamic> 
+                */}
             </CardFooter>
         </Card>
     );
